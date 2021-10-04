@@ -9,9 +9,7 @@ class Admin
 {
     public function handle($request, Closure $next)
     {
-        dd($request->all());
         if (Auth::check()) {
-
             if (Auth::user()->is_admin == '1') {
                 return $next($request);
             } else {
