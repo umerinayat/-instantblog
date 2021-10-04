@@ -38,8 +38,9 @@ class LoginController extends Controller
      */
     public function __construct()
     {
-        dd('test');
+      
         $this->middleware('guest', ['except' => 'logout']);
+        dd('test');
     }
 
     public function redirectToProvider($driver)
