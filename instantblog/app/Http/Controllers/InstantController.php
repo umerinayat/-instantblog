@@ -71,6 +71,7 @@ class InstantController extends Controller
 
     public function deactivateScript(Request $request)
     {
+        dd('test');
         $setting = Setting::findOrFail($request->id);
         $dcode = $setting->site_activation;
         $client = new Client();
