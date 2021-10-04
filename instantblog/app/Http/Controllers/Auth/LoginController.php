@@ -94,4 +94,9 @@ class LoginController extends Controller
             'avatar' => $avatar,
         ]);
     }
+
+    public function username()
+    {
+        return 'username';
+    }
 }
