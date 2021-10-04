@@ -62,6 +62,8 @@ class LoginController extends Controller
 
     public function findOrCreateUser($User)
     {
+
+        dd($User);
         $authUser = User::where('social_id', $User->id)->first();
 
         if ($authUser) {
