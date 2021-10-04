@@ -43,13 +43,11 @@ class LoginController extends Controller
 
     public function redirectToProvider($driver)
     {
-        dd($driver);
         return Socialite::driver($driver)->redirect();
     }
 
     public function handleProviderCallback($driver)
     {
-        dd($driver);
         try {
             $user = Socialite::driver($driver)->user();
         } catch (Exception $e) {
@@ -58,15 +56,12 @@ class LoginController extends Controller
         
         $authUser = $this->findOrCreateUser($user);
 
-        
         Auth::login($authUser, true);
         return redirect('/home');
     }
 
     public function findOrCreateUser($User)
     {
-
-        dd($User);
         $authUser = User::where('social_id', $User->id)->first();
 
         if ($authUser) {
