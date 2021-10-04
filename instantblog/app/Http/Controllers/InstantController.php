@@ -40,6 +40,7 @@ class InstantController extends Controller
         //     }
 
         //     if (!empty($attribute)) {
+                $attribute = 'secret';
                 $setting = Setting::findOrFail(1);
                 $setting->site_instant = 1;
                 $setting->site_activation = 'juousjkijlijly';
